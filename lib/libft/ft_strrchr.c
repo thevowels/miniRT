@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/07 16:23:51 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/15 16:12:04 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+char	*ft_strrchr(const char *str, int c)
 {
-    (void) argc;
-    (void) argv;
+	int	i;
 
-    printf("miniRT \n");
-    return (0);
+	i = ft_strlen(str);
+	while (i >= 0)
+	{
+		if ((unsigned char)*(str + i) == (unsigned char)c)
+		{
+			return ((char *)str + i);
+		}
+		i--;
+	}
+	return (0);
 }

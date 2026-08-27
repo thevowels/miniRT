@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/06 13:18:09 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/08 10:12:33 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+int	ft_isdigit(int n)
 {
-    (void) argc;
-    (void) argv;
-
-    printf("miniRT \n");
-    return (0);
+	if (n >= '0' && n <= '9')
+	{
+		return (1);
+	}
+	return (0);
 }

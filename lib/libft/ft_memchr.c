@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/07 14:21:53 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/13 14:01:00 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	*ft_memchr(const void *str, int c, size_t n)
 {
-    (void) argc;
-    (void) argv;
+	size_t	i;
 
-    printf("miniRT \n");
-    return (0);
+	i = 0;
+	while (i < n)
+	{
+		if (*((unsigned char *)str + i) == (unsigned char)c)
+		{
+			return ((unsigned char *)str + i);
+		}
+		i++;
+	}
+	return (NULL);
 }

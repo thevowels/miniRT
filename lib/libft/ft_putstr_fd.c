@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/12 09:30:22 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/12 09:33:37 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	ft_putstr_fd(char *s, int fd)
 {
-    (void) argc;
-    (void) argv;
-
-    printf("miniRT \n");
-    return (0);
+	write(fd, s, ft_strlen(s));
 }

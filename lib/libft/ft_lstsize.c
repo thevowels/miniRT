@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/12 12:03:43 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/12 12:34:12 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+int	ft_lstsize(t_list *lst)
 {
-    (void) argc;
-    (void) argv;
+	t_list	*current;
+	int		len;
 
-    printf("miniRT \n");
-    return (0);
+	current = lst;
+	len = 0;
+	while (current != NULL)
+	{
+		current = current->next;
+		len++;
+	}
+	return (len);
 }

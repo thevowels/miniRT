@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/06 15:28:54 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/08 10:14:50 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	*ft_memset(void *ptr, int x, size_t n)
 {
-    (void) argc;
-    (void) argv;
+	size_t	i;
 
-    printf("miniRT \n");
-    return (0);
+	i = 0;
+	while (i < n)
+	{
+		*((unsigned char *)ptr + i) = x;
+		i++;
+	}
+	return (ptr);
 }

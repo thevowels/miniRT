@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/07 14:02:56 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/12 10:25:11 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+// erases n bytes of memory starting from the location pointed by *ptr
+
+void	*ft_bzero(void *ptr, size_t n)
 {
-    (void) argc;
-    (void) argv;
+	size_t	i;
 
-    printf("miniRT \n");
-    return (0);
+	i = 0;
+	while (i < n)
+	{
+		*((unsigned char *)ptr + i) = '\0';
+		i++;
+	}
+	return (ptr);
 }

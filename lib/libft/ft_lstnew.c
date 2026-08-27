@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:47:58 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 09:47:41 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2023/10/12 11:30:29 by rpambhar          #+#    #+#             */
+/*   Updated: 2023/10/17 12:01:59 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(int argc, char **argv)
+t_list	*ft_lstnew(void *content)
 {
-    (void) argc;
-    (void) argv;
+	t_list	*head;
 
-    printf("miniRT \n");
-    return (0);
+	head = (t_list *)malloc(sizeof(t_list));
+	if (head == NULL)
+		return (NULL);
+	head->content = content;
+	head->next = NULL;
+	return (head);
 }
