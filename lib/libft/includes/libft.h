@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:36:44 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/01/20 07:14:02 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/08/29 14:45:30 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ double				ft_atof(char *str);
 int					ft_startswith(char *str, char *start);
 char				**ft_split(char *str, char c);
 size_t				ft_strlen(char *s);
+size_t				ft_chunklen(char *s, char c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**ft_sarr_free(char **arr);
 char				*ft_strdup(char *str);
 char				**ft_split_spaces(char *str);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
 
 ///////////////////////////////////////////////////////////////////////////////
 //									PRINT                                    //
