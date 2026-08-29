@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:53:11 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 10:27:03 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/08/27 10:23:44 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/08/27 10:24:46 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
-
+#ifndef CAMERA_H
+# define CAMERA_H
 #include "ray.h"
-#include "light.h"
-#include "camera.h"
-#include "hittable.h"
-#include "hittable_list.h"
-#include "hittable_obj.h"
 
-typedef struct s_elements
+typedef struct s_cam
 {
-    t_ambient *ambient;
-    t_cam     *cam;
-    t_point_light *light;
-    t_hittable_list *objs;
-}   t_elements;
-
+	t_vec4	orig;
+	t_vec4	horiz;
+	t_vec4	vert;
+	t_vec4	btm_left_cnr;
+}	t_cam;
 
 # endif

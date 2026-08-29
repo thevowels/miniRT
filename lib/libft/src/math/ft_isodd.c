@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   ft_isodd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:53:11 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 10:27:03 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2025/10/11 08:39:21 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2025/10/11 08:45:01 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
-
-#include "ray.h"
-#include "light.h"
-#include "camera.h"
-#include "hittable.h"
-#include "hittable_list.h"
-#include "hittable_obj.h"
-
-typedef struct s_elements
+/**
+ * @brief Checks if an integer is odd
+ * 
+ * Uses bitwise AND operation to efficiently test if the least significant
+ * bit is 1 (indicating an odd number).
+ * 
+ * @param i The integer to check
+ * @return 1 if the number is odd, 0 if even
+ * @note Efficient implementation using bitwise operation
+ */
+int	ft_isodd(int i)
 {
-    t_ambient *ambient;
-    t_cam     *cam;
-    t_point_light *light;
-    t_hittable_list *objs;
-}   t_elements;
-
-
-# endif
+	return (i & 0x1);
+}

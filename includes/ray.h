@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:53:11 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 10:27:03 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/08/27 09:52:08 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/08/27 10:03:21 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef RAY_H
+# define RAY_H
+typedef float					t_vec4 __attribute__ ((vector_size (16)));
 
-#include "ray.h"
-#include "light.h"
-#include "camera.h"
-#include "hittable.h"
-#include "hittable_list.h"
-#include "hittable_obj.h"
 
-typedef struct s_elements
+typedef struct s_ray
 {
-    t_ambient *ambient;
-    t_cam     *cam;
-    t_point_light *light;
-    t_hittable_list *objs;
-}   t_elements;
+    t_vec4 orig;
+    t_vec4 dir;
+}   t_ray;
 
 
-# endif
+#endif

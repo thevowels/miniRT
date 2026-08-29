@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   hittable_list.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:53:11 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 10:27:03 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/08/27 10:10:49 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/08/27 10:20:37 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
-
-#include "ray.h"
-#include "light.h"
-#include "camera.h"
+#ifndef HITTABLE_LIST_H
+# define HITTABLE_LIST_H
 #include "hittable.h"
-#include "hittable_list.h"
 #include "hittable_obj.h"
 
-typedef struct s_elements
+typedef struct s_hittable_list
 {
-    t_ambient *ambient;
-    t_cam     *cam;
-    t_point_light *light;
-    t_hittable_list *objs;
-}   t_elements;
+    t_sphere *s;
+    t_plane *p;
+    t_cylinder *c;
+    t_hittable *hit;
+    t_vec4  color;
+    int i;
+    struct s_hittable_list  *next;
+    struct s_hittable_list  *prev;
+}   t_hittable_list;
 
 
-# endif
+
+#endif

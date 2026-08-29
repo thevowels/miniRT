@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:53:11 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 10:27:03 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2025/10/23 20:06:14 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2025/10/23 20:40:12 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "libft.h"
 
-#include "ray.h"
-#include "light.h"
-#include "camera.h"
-#include "hittable.h"
-#include "hittable_list.h"
-#include "hittable_obj.h"
-
-typedef struct s_elements
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-    t_ambient *ambient;
-    t_cam     *cam;
-    t_point_light *light;
-    t_hittable_list *objs;
-}   t_elements;
-
-
-# endif
+	if (n == 0)
+		return (0);
+	while (*s1 && *s2 && n > 0)
+	{
+		if (*s1 != *s2)
+			break ;
+		n--;
+		s1++;
+		s2++;
+	}
+	if (n == 0)
+		return (0);
+	return (*s1 - *s2);
+}

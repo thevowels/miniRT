@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   m_utils.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 17:53:11 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/27 10:27:03 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/08/27 10:29:49 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/08/27 10:41:25 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef M_UTILS_H
+# define M_UTILS_H
 
-#include "ray.h"
-#include "light.h"
-#include "camera.h"
-#include "hittable.h"
-#include "hittable_list.h"
-#include "hittable_obj.h"
+// parsing UTILS
+int	check_ft(char *file);
 
-typedef struct s_elements
-{
-    t_ambient *ambient;
-    t_cam     *cam;
-    t_point_light *light;
-    t_hittable_list *objs;
-}   t_elements;
-
-
-# endif
+#endif
