@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_scalar_div.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/29 17:47:01 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/29 17:48:26 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/08/29 19:00:49 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/08/29 19:11:12 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-t_list	*ft_lstnew(void *content)
+// if you pass 0 , thats your problem
+t_vec	ft_scalar_div(t_vec v1, double scalar)
 {
-	t_list *node;
+	t_vec tmp;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
-		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	tmp.x = v1.x / scalar;
+	tmp.y = v1.y / scalar;
+	tmp.z = v1.z / scalar;
+
+	return (tmp);
 }

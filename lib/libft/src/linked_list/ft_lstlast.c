@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/29 17:47:01 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/29 17:48:26 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/08/29 17:52:49 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/08/29 17:54:39 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstlast(t_list *lst)
 {
-	t_list *node;
-
-	node = malloc(sizeof(t_list));
-	if (!node)
+	if(lst == NULL)
 		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	while(lst->next)
+		lst = lst->next;
+	return lst;
 }

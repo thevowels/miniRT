@@ -6,101 +6,66 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 05:08:49 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/01/19 21:37:05 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/04/18 11:26:46 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-static char	**free_split(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
-
-static size_t	count_words(char const *s, char c)
+static size_t	ft_count_words(char *str, char c)
 {
 	size_t	count;
-	int		in_word;
+	size_t	i;
 
 	count = 0;
-	in_word = 0;
-	while (*s)
+	i = 0;
+	while (str[i])
 	{
-		if (*s != c && in_word == 0)
+		while (str[i] == c)
+			i++;
+		if (str[i])
 		{
-			in_word = 1;
 			count++;
+			while (str[i] && str[i] != c)
+				i++;
 		}
-		else if (*s == c)
-		{
-			in_word = 0;
-		}
-		s++;
 	}
 	return (count);
 }
 
-static char	*create_word(char const *s, size_t len)
+static void	do_split(char **result, char *str, char c)
 {
-	char	*word;
 	size_t	i;
+	size_t	j;
+	size_t	k;
 
-	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (!word)
-		return (NULL);
 	i = 0;
-	while (i < len)
+	j = 0;
+	while (str[i])
 	{
-		word[i] = s[i];
-		i++;
+		while (str[i] == c)
+			i++;
+		if (str[i])
+		{
+			k = 0;
+			while (str[i + k] && str[i + k] != c)
+				k++;
+			result[j++] = ft_substr(str, i, k);
+			i += k;
+		}
 	}
-	word[i] = 0;
-	return (word);
-}
-
-static char	**check_and_get(char *str, char c)
-{
-	char	**result;
-
-	if (!str || count_words(str, c) == 0)
-		return (NULL);
-	result = (char **)malloc(sizeof(char *) * (count_words(str, c) + 1));
-	return (result);
+	result[j] = NULL;
 }
 
 char	**ft_split(char *str, char c)
 {
-	char		**result;
-	size_t		word_index;
-	const char	*word_start;
+	char	**result;
 
-	result = check_and_get(str, c);
+	if (!str)
+		return (NULL);
+	result = (char **)malloc((ft_count_words(str, c) + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
-	word_index = 0;
-	while (*str)
-	{
-		while (*str && *str == c)
-			str++;
-		if (!*str)
-			continue ;
-		word_start = str;
-		while (*str && *str != c)
-			str++;
-		result[word_index] = create_word(word_start, str - word_start);
-		if (!result[word_index])
-			return (free_split(result));
-		word_index++;
-	}
-	result[word_index] = NULL;
+	do_split(result, str, c);
 	return (result);
 }
