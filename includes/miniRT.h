@@ -60,6 +60,8 @@ typedef struct s_camera
 	t_point	pos;
 	t_vec3	dir;
 	double	fov;
+	double	yaw;
+	double	pitch;
 	t_vec3	u;
 	t_vec3	v;
 	t_vec3	w;
@@ -67,6 +69,9 @@ typedef struct s_camera
 	t_vec3	viewport_v;
 	t_point	pixel00_loc;
 }	t_camera;
+
+# define CAM_ROT_STEP 0.05
+# define CAM_PITCH_LIMIT 1.47
 
 typedef enum e_obj_type
 {
@@ -109,6 +114,8 @@ typedef struct s_sphere
 // Camera
 void	init_camera(t_camera *cam, int width, int height);
 t_ray	get_ray(const t_camera *cam, int x, int y, int width, int height);
+void	camera_yaw(t_camera *cam, double delta);
+void	camera_pitch(t_camera *cam, double delta);
 
 // Objects
 
@@ -124,5 +131,9 @@ void	render(mlx_image_t *img, const t_scene *scene);
 
 // Scene
 bool	hit_scene(const t_scene *scene, const t_ray *r, double t_max, t_hit_record *rec);
+
+// MLX / Hooks
+void	key_hook(mlx_key_data_t keydata, void *param);
+bool	handle_movement(t_data *data, mlx_key_data_t keydata);
 
 #endif

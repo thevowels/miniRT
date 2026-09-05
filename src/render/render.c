@@ -41,10 +41,10 @@ static	t_color	compute_color(const t_scene *scene, const t_ray *r)
 
 	light_vec = vec_sub(scene->light.pos, rec.p);
 	light_dist = vec_len(light_vec);
-	shadow_ray.orig = rec.p;
+	shadow_ray.orig = vec_add(rec.p, vec_scale(rec.normal, EPSILON));
 	shadow_ray.dir = vec_norm(light_vec);
 
-	if(!hit_scene(scene, &shadow_ray, light_dist,  &shadow))
+	if(!hit_scene(scene, &shadow_ray, light_dist - EPSILON,  &shadow))
 	{
 		diff = fmax(0.0, vec_dot(rec.normal, shadow_ray.dir)) * scene->light.brightness;
 		out = vec_add(out, vec_scale(rec.color, diff));

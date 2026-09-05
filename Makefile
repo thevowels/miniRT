@@ -35,6 +35,7 @@ SRCS_OBJECTS = plane.c sphere.c
 SRCS_RENDER	= render.c
 SRCS_VECTOR = vec_ops.c vec_arithmetic.c
 SRCS_SCENE = scene.c 
+SRCS_MLX = hooks.c movement.c
 
 SRCS += $(addprefix ./src/camera/, $(SRCS_CAMERA))
 
@@ -45,6 +46,8 @@ SRCS += $(addprefix ./src/render/, $(SRCS_RENDER))
 SRCS += $(addprefix ./src/vector/, $(SRCS_VECTOR))
 
 SRCS += $(addprefix ./src/scene/, $(SRCS_SCENE))
+
+SRCS += $(addprefix ./src/mlx/, $(SRCS_MLX))
 
 OBJS	:= ${SRCS:.c=.o}
 

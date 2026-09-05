@@ -6,20 +6,11 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/05 16:08:39 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/05 17:04:26 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/05 17:50:33 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-static void	key_hook(mlx_key_data_t	keydata, void	*param)
-{
-	t_data	*data;
-	
-	data = (t_data	*)param;
-	if(keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(data->mlx);
-}
 
 static void	setup_dummy_scene(t_scene *scene, t_plane *pl, t_sphere *sp, t_object *objs)
 {

@@ -12,6 +12,34 @@
 
 #include "miniRT.h"
 #include <math.h>
+
+static t_vec3	dir_from_yaw_pitch(double yaw, double pitch)
+{
+	double	cp;
+	double	sp;
+	double	sy;
+	double	cy;
+
+	cp = cos(pitch);
+	sp = sin(pitch);
+	sy = sin(yaw);
+	cy = cos(yaw);
+	return (vec_norm((t_vec3){cp * sy, sp, -cp * cy}));
+}
+
+static void	sync_yaw_pitch_from_dir(t_camera *cam)
+{
+	t_vec3	n;
+
+	n = vec_norm(cam->dir);
+	cam->yaw = atan2(n.x, -n.z);
+	cam->pitch = asin(fmax(-1.0, fmin(1.0, n.y)));
+	if (cam->pitch > CAM_PITCH_LIMIT)
+		cam->pitch = CAM_PITCH_LIMIT;
+	if (cam->pitch < -CAM_PITCH_LIMIT)
+		cam->pitch = -CAM_PITCH_LIMIT;
+}
+
 void	init_camera(t_camera *cam, int width, int height)
 {
 	t_vec3	vup;
@@ -20,6 +48,8 @@ void	init_camera(t_camera *cam, int width, int height)
 	double	vp_h;
 	double	vp_w;
 	t_vec3	center;
+
+	sync_yaw_pitch_from_dir(cam);
 	vup = (t_vec3){0, 1, 0};
 	if(fabs(cam->dir.y) > 0.999)
 		vup = (t_vec3){0,0,1};
@@ -35,6 +65,22 @@ void	init_camera(t_camera *cam, int width, int height)
 	cam->viewport_v = vec_scale(cam->v, -vp_h);
 	cam->pixel00_loc = vec_sub(center, vec_scale(cam->viewport_u, 0.5));
 	cam->pixel00_loc = vec_sub(cam->pixel00_loc, vec_scale(cam->viewport_v, 0.5));
+}
+
+void	camera_yaw(t_camera *cam, double delta)
+{
+	cam->yaw += delta;
+	cam->dir = dir_from_yaw_pitch(cam->yaw, cam->pitch);
+}
+
+void	camera_pitch(t_camera *cam, double delta)
+{
+	cam->pitch += delta;
+	if (cam->pitch > CAM_PITCH_LIMIT)
+		cam->pitch = CAM_PITCH_LIMIT;
+	if (cam->pitch < -CAM_PITCH_LIMIT)
+		cam->pitch = -CAM_PITCH_LIMIT;
+	cam->dir = dir_from_yaw_pitch(cam->yaw, cam->pitch);
 }
 
 
