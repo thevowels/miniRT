@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/31 00:17:14 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/31 00:32:39 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/05 14:44:09 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,13 @@ typedef enum e_error
     ERR_COUNT
 }   t_error;
 
+// gnl
+char		*get_next_line(int fd);
 
 // parser
 // parser.c
 t_data *parse(int argc, char **argv);
+t_map	*check_input(int argc, char **argv);
 
 // init
 //init.c
@@ -179,4 +182,14 @@ void	ft_error(t_data *data, t_error ecase);
 // utils
 // utils.c
 void *ft_safefree(void * ptr);
+bool	ft_endswith(char *str, char *end);
+void ft_swapspaces(char *str);
+
+// clean.c
+void free_map(t_map	 *map);
+
+
+//rt_files.c
+int ft_iscomment(char *line);
+
 # endif

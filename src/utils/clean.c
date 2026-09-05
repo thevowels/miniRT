@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.c                                           :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/31 00:16:51 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/31 01:38:34 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/09/05 13:46:34 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/09/05 13:48:19 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "miniRT.h"
 
-
-
-int main(int argc, char **argv)
+void free_map(t_map	 *map)
 {
-	t_data *data;
-
-	data = init_data();
-	data->map = check_input(argc, argv);
-
+	int	i;
+	i = 0;
+	while(map && map->file && map->file[i])
+	{
+		ft_safefree(map->file[i]);
+		i++;
+	}
+	ft_safefree(map->file);
+	ft_safefree(map);
 }

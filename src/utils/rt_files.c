@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.c                                           :+:      :+:    :+:   */
+/*   rt_files.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/31 00:16:51 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/31 01:38:34 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/09/05 13:40:29 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/09/05 13:42:18 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-
-
-int main(int argc, char **argv)
+int ft_iscomment(char *line)
 {
-	t_data *data;
-
-	data = init_data();
-	data->map = check_input(argc, argv);
-
+	if(line == NULL)
+		return (0);
+	while(*line && ft_isspace(*line))
+		line++;
+	if(*line && *line == '#')
+		return(1);
+	return (0);
 }
