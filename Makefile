@@ -25,9 +25,24 @@ GNL			:= $(GNL_PATH)$(GNL_NAME)
 # Includes
 INC		:=	-I $(LIBMLX)/include\
 			-I ./lib/libft/\
+			-I ./includes
 
 
 SRCS	:= src/main.c
+
+SRCS_CAMERA = camera.c
+SRCS_OBJECTS = plane.c
+SRCS_RENDER	= render.c
+SRCS_VECTOR = vec_ops.c vec_arithmetic.c
+
+SRCS += $(addprefix ./src/camera/, $(SRCS_CAMERA))
+
+SRCS += $(addprefix ./src/objects/, $(SRCS_OBJECTS))
+
+SRCS += $(addprefix ./src/render/, $(SRCS_RENDER))
+
+SRCS += $(addprefix ./src/vector/, $(SRCS_VECTOR))
+
 
 OBJS	:= ${SRCS:.c=.o}
 

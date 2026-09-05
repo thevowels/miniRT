@@ -1,0 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/05 15:28:09 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/09/05 16:08:19 by aphyo-ht         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "miniRT.h"
+
+static inline uint32_t	to_rgba(t_color c)
+{
+	int r;
+	int g;
+	int b;
+
+	r = (int)(fmin(1.0, fmax(0.0, c.x)) * 255.0);
+	g = (int)(fmin(1.0, fmax(0.0, c.y)) * 255.0);
+	b = (int)(fmin(1.0, fmax(0.0, c.z)) * 255.0);
+	return ((uint32_t)r << 24 | (uint32_t)g << 16 | (uint32_t)b << 8 | 255);
+}
+
+static	t_color	compute_color(const t_scene *scene, const t_ray *r)
+{
+	t_hit_record	rec;
+	t_vec3			light_dir;
+	double			diff;
+	t_color			out;
+
+	if(!hit_plane(&scene->plane, r, &rec))
+		return ((t_color){0.05, 0.05, 0.08});
+	out = vec_scale(rec.color, scene->ambient_ratio);
+	light_dir = vec_norm(vec_sub(scene->light.pos,rec.p));
+	diff = fmax(0.0, vec_dot(rec.normal, light_dir)) * scene->light.brightness;
+	out = vec_add(out, vec_scale(rec.color, diff));
+	return (out);
+}
+
+void	render(mlx_image_t *img, const t_scene	*scene)
+{
+	int	x;
+	int	y;
+	t_ray	ray;
+	t_color	pixel_col;
+	
+	y = 0;
+	while(y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			ray = get_ray(&scene->cam, x, y, WIDTH, HEIGHT);
+			pixel_col = compute_color(scene, &ray);
+			mlx_put_pixel(img, x, y, to_rgba(pixel_col));
+			x++;
+		}
+		y++;
+	}
+}
