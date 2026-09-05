@@ -6,13 +6,14 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/05 15:25:27 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/05 16:20:24 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/05 16:57:49 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	hit_plane(const t_plane *pl, const t_ray *r, t_hit_record *rec)
+bool	hit_plane(const t_plane *pl, const t_ray *r, double t_max,
+		t_hit_record *rec)
 {
 	double denom;
 	double t;
@@ -23,7 +24,7 @@ bool	hit_plane(const t_plane *pl, const t_ray *r, t_hit_record *rec)
 		return (false);
 	p0_minus_o = vec_sub(pl->point, r->orig);
 	t = vec_dot(p0_minus_o, pl->normal) / denom;
-	if(t < EPSILON)
+	if (t < EPSILON || t > t_max)
 		return (false);
 	rec->t = t;
 	rec->p = vec_add(r->orig, vec_scale(r->dir, t));

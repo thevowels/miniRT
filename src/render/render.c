@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/05 15:28:09 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/05 16:08:19 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/05 17:02:41 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,28 @@ static inline uint32_t	to_rgba(t_color c)
 static	t_color	compute_color(const t_scene *scene, const t_ray *r)
 {
 	t_hit_record	rec;
-	t_vec3			light_dir;
+	t_hit_record	shadow;
+	t_ray			shadow_ray;
+	t_vec3			light_vec;
+	double			light_dist;
 	double			diff;
 	t_color			out;
 
-	if(!hit_plane(&scene->plane, r, &rec))
+	if(!hit_scene(scene, r, INFINITY, &rec))
 		return ((t_color){0.05, 0.05, 0.08});
+	
 	out = vec_scale(rec.color, scene->ambient_ratio);
-	light_dir = vec_norm(vec_sub(scene->light.pos,rec.p));
-	diff = fmax(0.0, vec_dot(rec.normal, light_dir)) * scene->light.brightness;
-	out = vec_add(out, vec_scale(rec.color, diff));
+
+	light_vec = vec_sub(scene->light.pos, rec.p);
+	light_dist = vec_len(light_vec);
+	shadow_ray.orig = rec.p;
+	shadow_ray.dir = vec_norm(light_vec);
+
+	if(!hit_scene(scene, &shadow_ray, light_dist,  &shadow))
+	{
+		diff = fmax(0.0, vec_dot(rec.normal, shadow_ray.dir)) * scene->light.brightness;
+		out = vec_add(out, vec_scale(rec.color, diff));
+	}
 	return (out);
 }
 
