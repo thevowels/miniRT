@@ -1,0 +1,7 @@
+# Classic three-object scene with strong side light for shadows
+A 0.1 255,255,255
+C 0,1.5,-6 0,-0.0995,0.995 65
+L -6,6,-2 0.9 255,255,255
+pl 0,-2,0 0,1,0 150,150,150
+sp 0,0,6 2.5 255,0,0
+cy 3,0,7 0,1,0 1.5 3.5 0,0,255

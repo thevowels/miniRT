@@ -5,109 +5,113 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/31 00:20:20 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/05 14:49:21 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/09/17 16:16:30 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/09/17 16:16:34 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "libft.h"
 
-static void count_lines(t_map *map)
+static char	*read_all(char *path)
 {
-	int		i;
-	char	*line;
+	int		fd;
+	char	buf[4096];
+	char	*all;
+	char	*tmp;
+	ssize_t	n;
 
-	i = 0;
-	line = NULL;
-
-	while(1)
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	all = ft_strdup("");
+	if (!all)
+		return (close(fd), NULL);
+	n = read(fd, buf, sizeof(buf));
+	while (n > 0)
 	{
-		line = get_next_line(map->fd);
-		if(line == NULL)
-			break;
-		if(!ft_iscomment(line))
-			i++;
-		ft_safefree(line);
+		buf[n] = '\0';
+		tmp = all;
+		all = ft_strjoin(tmp, buf);
+		free(tmp);
+		if (!all)
+			return (close(fd), NULL);
+		n = read(fd, buf, sizeof(buf));
 	}
-	map->file = ft_calloc(i + 1, sizeof(char *));
-	if(map->file != NULL)
-		map->file[i] = NULL;
-	else
-		map->file = NULL;
-	close(map->fd);
+	close(fd);
+	if (n < 0)
+		return (free(all), NULL);
+	return (all);
 }
 
-static void parse_map(t_map *map)
+static int	count_valid(char **split)
 {
-	int		i;
-	char	*line;
+	int	count;
+	int	i;
 
+	count = 0;
 	i = 0;
-	line = NULL;
-	if(!map || !(map->file))
-		return;
-	while(true)
+	while (split[i])
 	{
-		line = get_next_line(map->fd);
-		if(!line)
-			break;
-		if(ft_iscomment(line))
-			ft_safefree(line);
-		else
-		{
-			map->file[i] = line;
-			i++;
-		}
+		if (!ft_iscomment(split[i]))
+			count++;
+		i++;
 	}
-	close(map->fd);
-
+	return (count);
 }
 
-// static void validate_lines(t_map *map)
-// {
-// 	int		i;
-// 	char	*line;
-
-// 	i = 0;
-// 	while(map && map->file && map->file[i])
-// 	{
-// 		ft_swapspaces(map->file[i]);
-// 		line = map->file[i];
-// 		while(line )
-// 	}
-// }
-
-t_map	*check_input(int argc, char **argv)
+static int	fill_lines(t_data *data, char **split)
 {
-	t_map *map;
-	map = ft_calloc(1, sizeof(t_map));
-	if(map == NULL)
-		return (error_message(ERR_ALLOC_MAP), NULL);
-	if(argc < 2)
-		return (ft_safefree(map), error_message(ERR_FEW_ARGS), NULL);
-	if(argc > 2)
-		return (ft_safefree(map), error_message(ERR_MANY_ARGS), NULL);
-	if(!ft_strcmp(argv[1], "") || !ft_endswith(argv[1],".rt"))
-		return (ft_safefree(map), error_message(ERR_INVALID_ARG), NULL);
-	map->fd = open(argv[1], O_RDONLY);
-	if(map->fd < 0)
-		return(ft_safefree(map), error_message(ERR_OPEN_FILE), NULL);
-	count_lines(map);
-	if(map->file == NULL)
-		return (ft_safefree(map), error_message(ERR_COUNT_LINES), NULL);
-	map->fd =  open(argv[1], O_RDONLY);
-	if(map->fd < 0)
-		return (free_map(map), error_message(ERR_OPEN_FILE),NULL);
-	parse_map(map);
-	if(map->file == NULL)
-		return (free_map(map), error_message(ERR_READ_LINES), NULL);
+	int	i;
+	int	j;
+
+	data->lines = ft_calloc(count_valid(split) + 1, sizeof(char *));
+	if (!data->lines)
+		return (-1);
+	i = 0;
+	j = 0;
+	while (split[i])
+	{
+		if (!ft_iscomment(split[i]))
+			data->lines[j++] = ft_strdup(split[i]);
+		if (j > 0 && !data->lines[j - 1])
+			return (-1);
+		i++;
+	}
+	return (0);
 }
 
-
-t_data *parse(int argc, char **argv)
+static t_data	*load_file(t_data *data, char *path)
 {
-t_data *data;
-data = init_data();
-data->map = parse_map(argc, argv);
+	char	*all;
+	char	**split;
+
+	all = read_all(path);
+	if (!all)
+		return (error_message(ERR_OPEN_FILE), NULL);
+	split = ft_split(all, '\n');
+	free(all);
+	if (!split)
+		return (error_message(ERR_READ), NULL);
+	if (fill_lines(data, split) != 0)
+		return (ft_sarr_free(split), error_message(ERR_READ), NULL);
+	ft_sarr_free(split);
+	return (data);
+}
+
+t_data	*check_input(int argc, char **argv)
+{
+	t_data	*data;
+
+	data = init_data();
+	if (!data)
+		return (error_message(ERR_ALLOC_DATA), NULL);
+	if (argc < 2)
+		return (free(data), error_message(ERR_FEW_ARGS), NULL);
+	if (argc > 2)
+		return (free(data), error_message(ERR_MANY_ARGS), NULL);
+	if (!ft_endswith(argv[1], ".rt"))
+		return (free(data), error_message(ERR_INVALID_ARG), NULL);
+	if (!load_file(data, argv[1]))
+		return (free(data), NULL);
+	return (data);
 }

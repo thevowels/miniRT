@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.c                                           :+:      :+:    :+:   */
+/*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/31 00:16:51 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/31 01:38:34 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/09/17 16:17:16 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/09/17 16:17:17 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-
-
-int main(int argc, char **argv)
+int	parse_scene(t_data *data)
 {
-	t_data *data;
+	int	i;
 
-	data = init_data();
-	data->map = check_input(argc, argv);
-
+	i = 0;
+	if (!data->lines || !data->lines[0])
+		return (-1);
+	while (data->lines[i])
+	{
+		if (parse_line(data, data->lines[i]) != 0)
+			return (-1);
+		i++;
+	}
+	if (!data->scene.amb.set)
+		return (-1);
+	if (!data->scene.cam.set)
+		return (-1);
+	if (!data->scene.light.set)
+		return (-1);
+	return (0);
 }

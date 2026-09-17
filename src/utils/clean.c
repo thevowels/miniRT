@@ -5,23 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/05 13:46:34 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/05 13:48:19 by aphyo-ht         ###   ########.fr       */
+/*   Created: 2026/09/17 16:19:45 by aphyo-ht          #+#    #+#             */
+/*   Updated: 2026/09/17 16:19:47 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+
 #include "miniRT.h"
 
-void free_map(t_map	 *map)
+void	free_lines(char **lines)
 {
 	int	i;
+
 	i = 0;
-	while(map && map->file && map->file[i])
+	if (!lines)
+		return ;
+	while (lines[i])
 	{
-		ft_safefree(map->file[i]);
+		free(lines[i]);
 		i++;
 	}
-	ft_safefree(map->file);
-	ft_safefree(map);
+	free(lines);
+}
+
+void	free_objs(t_obj *objs)
+{
+	t_obj	*tmp;
+
+	while (objs)
+	{
+		tmp = objs->next;
+		free(objs);
+		objs = tmp;
+	}
+}
+
+void	free_data(t_data *data)
+{
+	if (!data)
+		return ;
+	free_lines(data->lines);
+	free_objs(data->scene.objs);
+	free(data);
 }

@@ -1,73 +1,65 @@
 NAME = miniRT
 
-# Compiler
-CC		=	cc
-CFLAGS	=	-Wextra -Wall -Werror
+CC = cc
+CFLAGS = -Wextra -Wall -Werror
 
-# MLX42
-LIBMLX		:= ./lib/MLX42
-LIBMLX_F	:= $(LIBMLX)/build/libmlx42.a
+LIBMLX := ./lib/MLX42
+LIBMLX_F := $(LIBMLX)/build/libmlx42.a
 
-HEADERS		:= -I ./includes -I $(LIBMLX)/include -I $(LIBFT_PATH)/includes $(GNL_PATH)
-LIBS		:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -g
+LIBFT_PATH := ./lib/libft/
+LIBFT := $(LIBFT_PATH)libft.a
 
-#Libft
-LIBFT_PATH	:=	./lib/libft/
-LIBFT_NAME	:=	libft.a
-LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
+INC := -I ./includes -I $(LIBMLX)/include -I ./lib/libft/includes
+LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-# gnl
-GNL_PATH	:= ./lib/gnl/
-GNL_NAME	:= gnl.a
-GNL			:= $(GNL_PATH)$(GNL_NAME)
+SRCS := src/main.c \
+	src/init/init.c \
+	src/error/error.c \
+	src/utils/utils.c \
+	src/utils/clean.c \
+	src/parser/parser.c \
+	src/parser/scene.c \
+	src/parser/parse_line.c \
+	src/parser/parse_obj.c \
+	src/parser/parse_val.c \
+	src/parser/parse_val2.c \
+	src/render/render.c \
+	src/render/camera.c \
+	src/render/ray.c \
+	src/render/hit_sphere.c \
+	src/render/hit_plane.c \
+	src/render/hit_cyl.c \
+	src/render/shade.c
 
+OBJS := $(SRCS:.c=.o)
 
-# Includes
-INC		:=	-I $(LIBMLX)/include\
-			-I ./lib/libft/\
+all: $(LIBMLX_F) $(LIBFT) $(NAME)
 
-
-SRCS	:= src/main.c
-
-OBJS	:= ${SRCS:.c=.o}
-
-all:  $(LIBMLX_F) $(LIBFT) $(GNL) $(NAME)
-
-
-# Compiling MLX42
 $(LIBMLX_F):
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-# Making Libft
 $(LIBFT):
 	@echo "Making Libft..."
 	@make -sC $(LIBFT_PATH)
 
-$(GNL):
-	@echo "Compiling gnl..."
-	@make -sC $(GNL_PATH)
-
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)
 
-# Compiling 
 $(NAME): $(OBJS)
 	@echo "Compiling MiniRT..."
-	@$(CC) $(OBJS) $(LIBS) $(LIBFT)  $(INC) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 clean:
 	@echo "Cleaning object files..."
 	@rm -rf $(OBJS)
 	@rm -rf $(LIBMLX)/build
 	@make clean -sC $(LIBFT_PATH)
-	@make clean -sC $(GNL_PATH)
 
 fclean: clean
 	@echo "Cleaning miniRT"
 	@rm -f $(NAME)
 	@make fclean -sC $(LIBFT_PATH)
-	@make fclean -sC $(GNL_PATH)
 
-re: clean all
+re: fclean all
 
-.PHONY: all, clean, fclean, re, libmlx
+.PHONY: all clean fclean re
