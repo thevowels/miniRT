@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 23:55:30 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2025/10/26 12:00:04 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/17 17:27:19 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ size_t	gnl_strlen(const char *str)
 t_gnl_data	*gnl_init_data(void)
 {
 	t_gnl_data	*data;
-	char	*str;
+	char		*str;
 
 	str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!str)

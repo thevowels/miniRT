@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 23:10:21 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2025/09/26 01:32:32 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/17 17:27:07 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static t_gnl_data	*ft_clean(t_gnl_data *data)
 char	*get_next_line(int fd)
 {
 	static t_gnl_data	*data;
-	char			*line;
+	char				*line;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
