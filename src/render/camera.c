@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:17:35 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/17 16:17:37 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/17 16:28:22 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	setup_camera(t_data *data)
 	data->cb.horizontal = ft_scalar_multi(data->cb.u, 2 * half_h * aspect);
 	data->cb.vertical = ft_scalar_multi(data->cb.v, 2 * half_h);
 	data->cb.lower_left = ft_subtract_vectors(data->cb.origin, data->cb.w);
-	data->cb.lower_left = ft_subtract_vectors(data->cb.lower_left, \
-		ft_scalar_div(data->cb.horizontal, 2));
-	data->cb.lower_left = ft_subtract_vectors(data->cb.lower_left, \
-		ft_scalar_div(data->cb.vertical, 2));
+	data->cb.lower_left = ft_subtract_vectors(data->cb.lower_left,
+			ft_scalar_div(data->cb.horizontal, 2));
+	data->cb.lower_left = ft_subtract_vectors(data->cb.lower_left,
+			ft_scalar_div(data->cb.vertical, 2));
 }
 
 t_ray	make_ray(t_data *data, double u, double v)
@@ -51,8 +51,8 @@ t_ray	make_ray(t_data *data, double u, double v)
 	t_ray	ray;
 	t_vec	p;
 
-	p = ft_add_vectors(data->cb.lower_left, \
-		ft_scalar_multi(data->cb.horizontal, u));
+	p = ft_add_vectors(data->cb.lower_left,
+			ft_scalar_multi(data->cb.horizontal, u));
 	p = ft_add_vectors(p, ft_scalar_multi(data->cb.vertical, v));
 	ray.origin = data->cb.origin;
 	ray.dir = ft_unit_vector(ft_subtract_vectors(p, ray.origin));

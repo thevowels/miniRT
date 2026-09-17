@@ -12,14 +12,14 @@
 
 #include "get_next_line.h"
 
-static void	ft_updatedata(t_data *data, char *buffer)
+static void	ft_updatedata(t_gnl_data *data, char *buffer)
 {
 	char	*tmp;
 	size_t	l;
 
 	if ((data->s_len + BUFFER_SIZE) >= data->m_len - 1)
 	{
-		tmp = ft_strjoin(data, buffer);
+		tmp = gnl_strjoin(data, buffer);
 		free(data->str);
 		data->str = tmp;
 	}
@@ -41,7 +41,7 @@ static void	ft_updatedata(t_data *data, char *buffer)
 	}
 }
 
-static void	do_read(int fd, t_data *data)
+static void	do_read(int fd, t_gnl_data *data)
 {
 	char	*buffer;
 	ssize_t	byte_read;
@@ -60,13 +60,13 @@ static void	do_read(int fd, t_data *data)
 		}
 		buffer[byte_read] = 0;
 		ft_updatedata(data, buffer);
-		if (ft_strchr(buffer, '\n'))
+		if (gnl_strchr(buffer, '\n'))
 			break ;
 	}
 	free(buffer);
 }
 
-static char	*ft_getline(t_data *data)
+static char	*ft_getline(t_gnl_data *data)
 {
 	char	*line;
 	int		i;
@@ -93,7 +93,7 @@ static char	*ft_getline(t_data *data)
 	return (line);
 }
 
-static t_data	*ft_clean(t_data *data)
+static t_gnl_data	*ft_clean(t_gnl_data *data)
 {
 	char	*tmp;
 	int		i;
@@ -124,13 +124,13 @@ static t_data	*ft_clean(t_data *data)
 
 char	*get_next_line(int fd)
 {
-	static t_data	*data;
+	static t_gnl_data	*data;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!data)
-		data = init_data();
+		data = gnl_init_data();
 	if (!data->s_ncount)
 	{
 		do_read(fd, data);

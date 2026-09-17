@@ -72,6 +72,17 @@ typedef struct s_obj
 	struct s_obj	*next;
 }	t_obj;
 
+typedef struct s_hitctx
+{
+	t_obj	*obj;
+	t_ray	ray;
+	double	tmax;
+	t_hit	*rec;
+	double	a;
+	double	b;
+	double	val;
+}	t_hitctx;
+
 typedef struct s_scene
 {
 	t_amb	amb;
@@ -138,6 +149,9 @@ void	free_data(t_data *data);
 
 /* init */
 t_data	*init_data(void);
+
+/* gnl (lib/gnl, prototyped here so its header's t_data never clashes) */
+char	*get_next_line(int fd);
 
 /* parser */
 t_data	*check_input(int argc, char **argv);

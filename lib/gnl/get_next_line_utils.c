@@ -36,7 +36,7 @@ static void	ft_memmove(char *dest, char *src, size_t n)
 	}
 }
 
-char	*ft_strjoin(t_data *data, char const *s2)
+char	*gnl_strjoin(t_gnl_data *data, char const *s2)
 {
 	char	*res;
 
@@ -45,12 +45,12 @@ char	*ft_strjoin(t_data *data, char const *s2)
 	if (!res || !data->str || !s2)
 		return (NULL);
 	ft_memmove(res, data->str, data->s_len);
-	ft_memmove(res + data->s_len, (char *)s2, ft_strlen(s2));
-	res[data->s_len + ft_strlen(s2)] = 0;
+	ft_memmove(res + data->s_len, (char *)s2, gnl_strlen(s2));
+	res[data->s_len + gnl_strlen(s2)] = 0;
 	return (res);
 }
 
-// char	*ft_strjoin(t_data *data, char const *s2)
+// char	*gnl_strjoin(t_gnl_data *data, char const *s2)
 // {
 // 	char	*res;
 // 	size_t	i;
@@ -76,7 +76,7 @@ char	*ft_strjoin(t_data *data, char const *s2)
 // 	return (res);
 // }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	char	*str;
 	char	check;
@@ -92,7 +92,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	gnl_strlen(const char *str)
 {
 	size_t	i;
 
@@ -102,16 +102,16 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-t_data	*init_data(void)
+t_gnl_data	*gnl_init_data(void)
 {
-	t_data	*data;
+	t_gnl_data	*data;
 	char	*str;
 
 	str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!str)
 		return (NULL);
 	*str = 0;
-	data = malloc(sizeof(t_data));
+	data = malloc(sizeof(t_gnl_data));
 	if (!data)
 		return (NULL);
 	data->str = str;

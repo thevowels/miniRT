@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:18:35 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/09/17 16:18:35 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/17 16:53:11 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static t_vec	diffuse(t_data *data, t_hit rec)
 		dot = 0;
 	if (in_shadow(data, rec.point, to_l, dist))
 		dot = 0;
-	out = ft_scalar_multi(ft_hadamard_product(rec.color, \
-		data->scene.light.color), dot * data->scene.light.ratio);
+	out = ft_scalar_multi(ft_hadamard_product(rec.color,
+				data->scene.light.color), dot * data->scene.light.ratio);
 	return (out);
 }
 

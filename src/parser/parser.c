@@ -12,89 +12,70 @@
 
 #include "miniRT.h"
 
-static char	*read_all(char *path)
+static int	append_line(t_data *data, char *line)
 {
-	int		fd;
-	char	buf[4096];
-	char	*all;
-	char	*tmp;
-	ssize_t	n;
+	char	**grow;
+	int		n;
+	int		i;
 
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	all = ft_strdup("");
-	if (!all)
-		return (close(fd), NULL);
-	n = read(fd, buf, sizeof(buf));
-	while (n > 0)
-	{
-		buf[n] = '\0';
-		tmp = all;
-		all = ft_strjoin(tmp, buf);
-		free(tmp);
-		if (!all)
-			return (close(fd), NULL);
-		n = read(fd, buf, sizeof(buf));
-	}
-	close(fd);
-	if (n < 0)
-		return (free(all), NULL);
-	return (all);
-}
-
-static int	count_valid(char **split)
-{
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (split[i])
-	{
-		if (!ft_iscomment(split[i]))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-static int	fill_lines(t_data *data, char **split)
-{
-	int	i;
-	int	j;
-
-	data->lines = ft_calloc(count_valid(split) + 1, sizeof(char *));
-	if (!data->lines)
+	n = ft_arrlen(data->lines);
+	grow = ft_calloc(n + 2, sizeof(char *));
+	if (!grow)
 		return (-1);
 	i = 0;
-	j = 0;
-	while (split[i])
+	while (i < n)
 	{
-		if (!ft_iscomment(split[i]))
-			data->lines[j++] = ft_strdup(split[i]);
-		if (j > 0 && !data->lines[j - 1])
-			return (-1);
+		grow[i] = data->lines[i];
 		i++;
 	}
+	grow[n] = line;
+	free(data->lines);
+	data->lines = grow;
 	return (0);
+}
+
+static int	store_line(t_data *data, char *line)
+{
+	char	*dup;
+
+	if (ft_iscomment(line))
+		return (0);
+	dup = ft_strdup(line);
+	if (!dup)
+		return (-1);
+	if (append_line(data, dup) != 0)
+		return (free(dup), -1);
+	return (0);
+}
+
+static int	read_lines(int fd, t_data *data)
+{
+	char	*line;
+	int		ret;
+
+	ret = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		ret = store_line(data, line);
+		free(line);
+		if (ret != 0)
+			break ;
+		line = get_next_line(fd);
+	}
+	return (ret);
 }
 
 static t_data	*load_file(t_data *data, char *path)
 {
-	char	*all;
-	char	**split;
+	int	fd;
 
-	all = read_all(path);
-	if (!all)
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
 		return (error_message(ERR_OPEN_FILE), NULL);
-	split = ft_split(all, '\n');
-	free(all);
-	if (!split)
-		return (error_message(ERR_READ), NULL);
-	if (fill_lines(data, split) != 0)
-		return (ft_sarr_free(split), error_message(ERR_READ), NULL);
-	ft_sarr_free(split);
+	if (read_lines(fd, data) != 0)
+		return (close(fd), error_message(ERR_READ), NULL);
+	close(fd);
 	return (data);
 }
 
