@@ -6,7 +6,7 @@
 /*   By: aphyo-ht <aphyo-ht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 17:49:23 by aphyo-ht          #+#    #+#             */
-/*   Updated: 2026/08/29 17:50:20 by aphyo-ht         ###   ########.fr       */
+/*   Updated: 2026/09/17 17:34:22 by aphyo-ht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,4 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	new->next = *(lst);
 	*lst = new;
-	
 }
